@@ -2,29 +2,24 @@ use std::fmt::format;
 
 use super::*;
 
-pub fn create_world_grid(
-    mut commands: Commands,
-    tilemap: ResMut<Tilemap>
-){
+pub fn create_world_grid(mut commands: Commands, tilemap: ResMut<Tilemap>) {
     // MATRIZ DO MUNDO (TILES)
     for y in 0..tilemap.height {
         for x in 0..tilemap.width {
-            commands
-                .spawn()
-                .insert(Tile {
-                    x: x,
-                    y: y,
-                    soma: 0,
-                    material: 0,
-                });
-                // .insert_bundle(SpriteBundle {
-                //     texture: server.load("tiles/tile_{}", ),
-                //     transform: Transform {
-                //         translation: Vec3::new(x as f32 * 16., y as f32 * 16., 0.),
-                //         ..default()
-                //     },
-                //     ..default()
-                // });
+            commands.spawn().insert(Tile {
+                x: x,
+                y: y,
+                soma: 0,
+                material: 0,
+            });
+            // .insert_bundle(SpriteBundle {
+            //     texture: server.load("tiles/tile_{}", ),
+            //     transform: Transform {
+            //         translation: Vec3::new(x as f32 * 16., y as f32 * 16., 0.),
+            //         ..default()
+            //     },
+            //     ..default()
+            // });
         }
     }
 }
@@ -34,9 +29,7 @@ pub fn populate_grid(query: Query<&Tile, With<Tile>>, mut tilemap: ResMut<Tilema
     }
     //println!("tile {:?}",tilemap.storage.len());
 }
-pub fn update_tiles(
-    mut tilemap: ResMut<Tilemap>
-) {
+pub fn update_tiles(mut tilemap: ResMut<Tilemap>) {
     let mut j: u32 = 0;
 
     for i in 0..tilemap.storage.len() {
@@ -77,48 +70,46 @@ pub fn update(
     mut query: Query<Entity, With<Tile>>,
     mut commands: Commands,
     server: Res<AssetServer>,
-    tilemap: ResMut<Tilemap>
+    tilemap: ResMut<Tilemap>,
+) {
+    for (index, entidade) in query.iter_mut().enumerate() {
+        println!("{:?}", index);
 
-){
-
-    for (index, entidade) in query.iter_mut().enumerate(){
-        println!("{:?}",index);
-        
-        let texture_index =  get_texture_index(tilemap.storage[index].soma);
+        let texture_index = get_texture_index(tilemap.storage[index].soma);
         let path = format!("tiles/tile_{:?}.png", texture_index);
         let tile = tilemap.storage[index];
 
         println!("Soma: {:?}", tile.soma);
-        println!("{}",path);
+        println!("{}", path);
 
         commands.entity(entidade).insert_bundle(SpriteBundle {
-                texture: server.load(&path),
-                transform: Transform {
-                    translation: Vec3::new(tile.x as f32 * 16., tile.y as f32 * 16., 0.),
-                    ..default()
-                },
+            texture: server.load(&path),
+            transform: Transform {
+                translation: Vec3::new(tile.x as f32 * 16., tile.y as f32 * 16., 0.),
                 ..default()
-            });
+            },
+            ..default()
+        });
     }
 }
 
-pub fn get_texture_index(sum: u32) -> i32{
-    let x = match sum{
+pub fn get_texture_index(sum: u32) -> i32 {
+    let x = match sum {
         // soma -> index
         //(BOTTOM)
-        3 =>    6,
-        7 =>    7,
-        6 =>    8,
+        3 => 6,
+        7 => 7,
+        6 => 8,
 
         //(MIDDLE)
-        11 =>   3,
-        15 =>   4,
-        14 =>   5,
-        
+        11 => 3,
+        15 => 4,
+        14 => 5,
+
         //(TOP)
-        9 =>    0,
-        13 =>   1,
-        12 =>   2,
+        9 => 0,
+        13 => 1,
+        12 => 2,
 
         //(EXEPTIONS HORIZONTAL)
         2 => 14,
@@ -131,10 +122,8 @@ pub fn get_texture_index(sum: u32) -> i32{
         1 => 9,
 
         0 => 15,
-        
 
-
-        _ =>    -1
+        _ => -1,
     };
     println!("x: {:?}", x);
     return x;

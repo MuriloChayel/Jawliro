@@ -3,10 +3,10 @@ use std::slice::Iter;
 pub mod tilebase;
 
 enum Ground_textures {
-    top_left_corner = 3, // 0
-    top_middle = 7,      // 1
-    top_right_corner = 6,// 2
-    midle_left = 11,     // 3  
+    top_left_corner = 3,  // 0
+    top_middle = 7,       // 1
+    top_right_corner = 6, // 2
+    midle_left = 11,      // 3
     center = 15,
     middle_right = 14,
     bottom_left_corner = 9,
@@ -15,16 +15,16 @@ enum Ground_textures {
 }
 impl Ground_textures {
     pub fn iterator() -> Iter<'static, Ground_textures> {
-        static GROUND_TEXTURES: [Ground_textures; 9] = [ 
-        Ground_textures::top_left_corner, 
-        Ground_textures::top_middle,
-        Ground_textures::top_right_corner,
-        Ground_textures::midle_left,
-        Ground_textures::center,
-        Ground_textures::middle_right,
-        Ground_textures::bottom_left_corner,
-        Ground_textures::bottom_middle,
-        Ground_textures::bottom_right_corner,
+        static GROUND_TEXTURES: [Ground_textures; 9] = [
+            Ground_textures::top_left_corner,
+            Ground_textures::top_middle,
+            Ground_textures::top_right_corner,
+            Ground_textures::midle_left,
+            Ground_textures::center,
+            Ground_textures::middle_right,
+            Ground_textures::bottom_left_corner,
+            Ground_textures::bottom_middle,
+            Ground_textures::bottom_right_corner,
         ];
         GROUND_TEXTURES.iter()
     }

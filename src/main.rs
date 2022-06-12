@@ -1,15 +1,18 @@
 use preferences::*;
 mod preferences;
-mod Tilemaps;
+mod player;
 use tilemaps::{
-    tilebase::{create_world_grid, populate_grid, update_tiles, update},
+    tilebase::{create_world_grid, populate_grid, update, update_tiles},
     Grid, Tilemap,
 };
+
+
+
 mod tilemaps;
 
 use camera::ortho_camera::create_camera;
 mod camera;
-use bevy::{prelude::*};
+use bevy::prelude::*;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -27,14 +30,15 @@ fn main() {
         })
         .insert_resource(Tilemap {
             storage: Vec::new(),
-            width: 7,
-            height: 2,
+            width: 8,
+            height: 5,
             pivot: (-10, -6),
         })
         .add_startup_system_to_stage(StartupStage::PreStartup, create_world_grid)
         .add_startup_system_to_stage(StartupStage::Startup, populate_grid)
         .add_startup_system_to_stage(StartupStage::PostStartup, update_tiles)
         .add_startup_system_to_stage(StartupStage::PostStartup, update.after(update_tiles))
+        .add_startup_system_to_stage(StartupStage::PostStartup, create_player.after(update))
         .add_startup_system(create_camera)
         //.add_system(show_tiles)
         .run();
