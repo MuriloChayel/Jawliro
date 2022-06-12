@@ -1,7 +1,12 @@
-use bevy::prelude::Component;
+use self::player::create_player;
+use bevy::prelude::{App, Plugin, StartupStage};
+pub mod player;
+pub mod structs;
 
-#[derive(Component)]
-pub struct Player{
-    vel: Velocity,
-    acc: Acceleration
-} 
+pub struct PlayerPlugin;
+
+impl Plugin for PlayerPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_startup_system_to_stage(StartupStage::PostStartup, create_player);
+    }
+}

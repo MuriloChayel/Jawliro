@@ -1,12 +1,12 @@
 use preferences::*;
-mod preferences;
 mod player;
+mod preferences;
 use tilemaps::{
     tilebase::{create_world_grid, populate_grid, update, update_tiles},
     Grid, Tilemap,
 };
 
-
+use player::PlayerPlugin;
 
 mod tilemaps;
 
@@ -38,7 +38,7 @@ fn main() {
         .add_startup_system_to_stage(StartupStage::Startup, populate_grid)
         .add_startup_system_to_stage(StartupStage::PostStartup, update_tiles)
         .add_startup_system_to_stage(StartupStage::PostStartup, update.after(update_tiles))
-        .add_startup_system_to_stage(StartupStage::PostStartup, create_player.after(update))
+        .add_plugin(PlayerPlugin)
         .add_startup_system(create_camera)
         //.add_system(show_tiles)
         .run();
