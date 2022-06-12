@@ -1,6 +1,5 @@
-use std::fmt::format;
-
-use super::*;
+use super::structs::{Tile, Tilemap};
+use bevy::prelude::*;
 
 pub fn create_world_grid(mut commands: Commands, tilemap: ResMut<Tilemap>) {
     // MATRIZ DO MUNDO (TILES)
