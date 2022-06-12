@@ -16,7 +16,7 @@ pub fn create_player(mut commands: Commands, server: Res<AssetServer>) {
         })
         .insert(Player{
             acc: Acceleration { a: Vec2::new(0., 0.) },
-            vel: Velocity { v: Vec2::new(20., 0.) },
+            vel: Velocity { v: Vec2::new(5., 0.) },
         }
     );
 }
@@ -26,21 +26,21 @@ pub fn player_movement(
     mut player_query: Query<(&mut Transform, &Player), With<Player>>,
 ){  
     for (mut player_transform, player) in player_query.iter_mut(){
-        let p = &mut player_transform.translation;
+        let player_translaction = &mut player_transform.translation;
         if key_pressed.pressed(KeyCode::A){
-            p.x -= player.vel.v.x;
+            player_translaction.x -= player.vel.v.x;
         }
 
         if key_pressed.pressed(KeyCode::D){
-            p.x += player.vel.v.x;
+            player_translaction.x += player.vel.v.x;
         }
 
         if key_pressed.just_pressed(KeyCode::W){
-            p.y += 4.;
+            player_translaction.y += 6.;
         }
 
         if key_pressed.just_released(KeyCode::W){
-            p.y -= 4.;
+            player_translaction.y -= 6.;
         }
     }
 

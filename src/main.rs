@@ -39,7 +39,6 @@ fn main() {
         .add_startup_system_to_stage(StartupStage::PostStartup, update.after(update_tiles))
         .add_plugin(PlayerPlugin)
         .add_startup_system(create_camera)
-        .add_plugin(PlayerPlugin)
         //.add_system(show_tiles)
         .run();
 }
